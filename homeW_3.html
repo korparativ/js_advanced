@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="products">
+      <div class="product">
+        <h2>Product 1</h2>
+        <input class="comment" type="text" />
+        <button class="btn">Добавить отзыв</button>
+        <button class="btn">Посмотреть отзывы</button>
+        <button class="btn">Удалить</button>
+      </div>
+      <div class="product">
+        <h2>Product 2</h2>
+        <input class="comment" type="text" />
+        <button class="btn">Добавить отзыв</button>
+        <button class="btn">Посмотреть отзывы</button>
+        <button class="btn">Удалить</button>
+      </div>
+      <div class="product">
+        <h2>Product 3</h2>
+        <input class="comment" type="text" />
+        <button class="btn">Добавить отзыв</button>
+        <button class="btn">Посмотреть отзывы</button>
+        <button class="btn">Удалить</button>
+      </div>
+    </div>
+    <script>
+      const btnCom = document.querySelectorAll(".btn");
+      btnCom.forEach((element) => {
+        element.addEventListener("click", function (e) {
+          if (e.target.textContent == "Добавить отзыв") {
+            const productEl = e.target.closest(".product");
+            const inpEl = productEl.querySelector(".comment");
+            if (inpEl.value != "") {
+              const idEl = productEl.querySelector("h2").textContent;
+              localStorage.setItem(idEl, inpEl.value);
+              inpEl.value = "";
+            } else {
+              alert("Поле комментария пусто!");
+            }
+          }
+          if (e.target.textContent == "Посмотреть отзывы") {
+            const productEl = e.target.closest(".product");
+            const idEl = productEl.querySelector("h2").textContent;
+            const comEl = document.createElement("p");
+            comEl.textContent = localStorage.getItem(idEl);
+            productEl.appendChild(comEl);
+          }
+          if (e.target.textContent == "Удалить") {
+            const productEl = e.target.closest(".product");
+            const idEl = productEl.querySelector("h2").textContent;
+            const comEl = productEl.querySelector("p");
+            comEl.remove();
+            localStorage.removeItem(idEl);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
